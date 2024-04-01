@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+const int N = 1010;
+int n, m, q, matrix[N][N], s[N][N];
+
+void Init(){
+  n = rand()%20+1;
+  m = rand()%20+1;
+  q = rand()%200000+1;
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++)
+      matrix[i][j] = rand()%1001*(rand()%2?1:-1);
+  }
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++)
+      s[i][j] = s[i-1][j]+s[i][j-1]-s[i-1][j-1]+matrix[i][j];
+  }
+}
+void Print(){
+  cout << "matrix " << n << "x" << m << endl << endl;
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++){
+      cout << setw(5) << matrix[i][j] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+  cout << "matrix_sum " << n << "x" << m << endl << endl;
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++){
+      cout << std::left << setw(12) << s[i][j] << " ";
+    }
+    cout << endl;
+  }
+}
+void Query(){
+  while(q--){
+    int x1,x2,y1,y2;
+    x1 = rand()%n+1;
+    do{
+      x2 = rand()%n+1;
+    }while(x2<x1);
+    y1 = rand()%m+1;
+    do{
+      y2 = rand()%m+1;
+    }while(y2<y1);
+    LL sum = s[x2][y2]-s[x1-1][y2]-s[x2][y1-1]+s[x1-1][y1-1];
+    cout << "[" << x1 << "," << y1 << "]" << " to " 
+         << "[" << x2 << "," << y2 << "] sum = "
+         << sum << endl;
+  }
+
+}
+int main(){
+  srand(time(0));
+  Init();
+  Print();
+  Query();
+  return 0;
+}

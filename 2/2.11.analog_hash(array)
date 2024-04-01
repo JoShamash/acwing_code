@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 300007;
+const int null = 0x3f3f3f3f;
+int h[N];
+
+void Init(){
+    memset(h,0x3f,sizeof(h));
+}
+
+void Insert(int x){
+    int k = (x%N+N)%N;
+    while(h[k]!=null){
+        k++;
+        if(k>=N) k=0;
+    }
+    h[k] = x;
+}
+
+bool Query(int x){
+    int k = (x%N+N)%N;
+    while(h[k]!=x){
+        if(h[k]==null) return false;
+        k++;
+        if(k>=N) k=0;
+    }
+    return true;
+}
+
+int main(){
+	Init();
+    int n;
+    cin >> n;
+    while(n--){
+        string op;
+        int x;
+        cin >> op >> x;
+        if(op=="I"){
+            Insert(x);
+        }
+        else{
+            cout << (Query(x)?"Yes":"No") << endl;
+        }
+    }
+    return 0;
+}

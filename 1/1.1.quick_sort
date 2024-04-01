@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> arr(20);
+
+void Init(){
+  for(auto &i :arr) i = rand()%21;
+}
+void Print(){
+  for(auto i :arr) cout << i << " ";
+  cout << endl;
+}
+void Quick_sort(int l,int r){
+  if(l>=r) return;
+  int x=arr[l], i=l-1, j=r+1;
+  while(i<j){
+    do{
+      i++;
+    }while(arr[i]<x);
+    do{
+      j--;
+    }while(arr[j]>x);
+    if(i<j) swap(arr[i],arr[j]);
+  }
+  Quick_sort(l,j), Quick_sort(j+1,r);
+}
+int main(){
+  srand(time(0));
+  Init();
+  Print();
+  Quick_sort(0,arr.size()-1);
+  Print();
+  return 0;
+}

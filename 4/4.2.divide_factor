@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void primeFac(int n){
+    for(int i=2;i<=n/i;i++){
+        int p = 0;
+        while(n%i==0) p++,n/=i;
+        if(p) cout << i << " " << p << endl;
+    }
+    if(n>1) cout << n << " " << 1 << endl;
+    cout << endl;
+}
+
+int main(){
+    int n;
+    cin >> n;
+    while(n--){
+        int a;
+        cin >> a;
+        primeFac(a);
+    }
+    return 0;
+}

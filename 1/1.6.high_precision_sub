@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> a, b, c;
+
+class Print{
+public:
+  void operator()(const int &val){
+  	if(val==-1) cout<< '-';
+    else cout << val;
+  }
+};
+
+void print(const vector<int> &v){
+  for_each(v.begin(),v.end(),Print());
+}
+
+void Init(){ //Randomize the numbers
+  int len1 = rand()%101;
+  int len2 = rand()%101;
+  for(int i=0;i<len1;i++){
+    if(!i) a.push_back(rand()%9+1); //Ensure the top number is not zero
+    else a.push_back(rand()%10);
+  }
+  for(int i=0;i<len2;i++){
+    if(!i) b.push_back(rand()%9+1);
+    else b.push_back(rand()%10);
+  }
+}
+
+
+vector<int> P_sub(vector<int> a,vector<int> b){
+  reverse(a.begin(),a.end());
+  reverse(b.begin(),b.end());
+  int t = 0;
+  bool postive = true; //use for printing the negative sign
+
+  string a1,b1;
+  for(int i=0;i<a.size();i++) a1.push_back(a[i]+'0');
+  for(int i=0;i<b.size();i++) b1.push_back(b[i]+'0');
+  if(a1.size()<b1.size() || (a1.size()==b1.size()&&a1<b1)){
+    swap(a,b);
+    postive = false;
+  }
+
+  vector<int> temp;
+  for(int i=0;i<a.size();i++){
+    t = a[i]-t;
+    if(i<b.size()) t-= b[i];
+    temp.push_back((t+10)%10);
+    t = t<0 ? 1 : 0;
+  }
+  while(temp.size()>1&&temp.back()==0) temp.pop_back();
+  if(!postive) temp.push_back(-1);
+  reverse(temp.begin(),temp.end());
+  return temp;
+}
+
+int main(){
+  srand(time(0));
+  Init();
+
+  cout << "a: ";
+  print(a);
+  cout << endl;
+  cout << "b: ";
+  print(b);
+  cout << endl;
+
+  c = P_sub(a,b);
+  cout << "c: ";
+  print(c);
+  cout << endl;
+
+  return 0;
+}

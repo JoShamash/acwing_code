@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> arr(30);
+
+void Init(){
+  for(auto &i :arr) i=rand()%21;
+}
+void Binary_search(int x){
+  int l= 0, r=arr.size()-1;
+  while(l<r){
+    int mid = l+r>>1;
+    if(arr[mid]>=x) r=mid;
+    else l=mid+1;
+  }
+  cout << "[" << l << "," ; 
+  l= 0, r=arr.size()-1;
+  while(l<r){
+    int mid = (l+r>>1)+1;
+    if(arr[mid]>x) r=mid-1;
+    else l=mid;
+  }
+  if(arr[l]!=x){
+    cout << x << " is not exit!" << endl;
+    return;
+  }
+  cout << l << "]" ; 
+}
+void Print(){
+  for(auto i :arr) cout << i << " ";
+  cout << endl;
+}
+int main(){
+  srand(time(0));
+  Init();
+  sort(arr.begin(),arr.end(),less<int>());
+  int x = rand()%11; // search element x'range in arr.
+  cout << "search: " << x << endl;
+  Print();
+  Binary_search(x);
+  return 0;
+}

@@ -1,0 +1,87 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+int h[N], ik[N], ki[N], size, idx;
+
+void Swap(int i1,int i2){
+    swap(ki[ik[i1]],ki[ik[i2]]);
+    swap(ik[i1],ik[i2]);
+    swap(h[i1],h[i2]);
+}
+
+void Up(int k){ //上溯
+    int t = k/2;
+    if(t && h[t]>h[k]){
+        Swap(t,k);
+        Up(t);
+    }
+}
+
+void Down(int k){ //下溯
+    int t = k;
+    if(2*k<=size && h[t]>h[2*k]) t = 2*k;
+    if(2*k+1<=size && h[t]>h[2*k+1]) t = 2*k+1;
+    if(t!=k){
+        Swap(t,k);
+        Down(t);
+    }
+}
+
+void Insert(int x){
+    idx++,size++;
+    ik[size] = idx;
+    ki[idx] = size;
+    h[size] = x;  
+    Up(size);
+}
+
+void PrintMin(){
+    cout << h[1] << endl;
+}
+
+void DeleteMin(){
+    Swap(1,size--);
+    Down(1);
+}
+
+void DeleteK(int k){
+    Swap(ki[k],size--);
+    Up(ki[k]);
+    Down(ki[k]);
+}
+
+void ChangeK(int k,int x){
+    h[ki[k]] = x;
+    Up(ki[k]);
+    Down(ki[k]);
+}
+
+int main(){
+    int n;
+    cin >> n;
+
+    while(n--){
+        string op;
+        int k, x;
+        cin >> op;
+        if(op=="I"){
+            cin >> x;
+            Insert(x);
+        }
+        else if(op=="PM"){
+            PrintMin();
+        }
+        else if(op=="DM"){
+            DeleteMin();
+        }
+        else if(op=="D"){
+            cin >> k;
+            DeleteK(k);
+        }
+        else{
+            cin >> k >> x, ChangeK(k,x);
+        }
+    }
+
+    return 0;
+}

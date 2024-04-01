@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+int h[N], e[2*N], ne[2*N], cnt, ans = N, n;
+bool st[N];
+
+void Init(){
+    memset(h,-1,sizeof(h));
+}
+
+void add(int a,int b){
+    e[cnt] = b;
+    ne[cnt] = h[a];
+    h[a] = cnt++;
+}
+
+void print(int n){
+    for(int i=1;i<=n;i++){
+        cout << i << " : ";
+        int k=h[i];
+        while(k!=-1){
+            cout << e[k] << " ";
+            k=ne[k];
+        }
+        cout << endl;
+    }
+}
+
+int dfs(int u){
+    st[u] = 1;
+    int others=0, sum=1;
+    for(int k=h[u];k!=-1;k=ne[k]){
+        int v = e[k];
+        if(st[v]) continue;
+        int ret = dfs(v);
+        sum += ret;
+        others = max(ret,others);
+    }
+    others = max(others,n-sum);
+    ans = min(ans,others);
+    return sum;
+}
+
+int main(){
+    Init();
+    cin >> n;
+    for(int i=1;i<n;i++){
+        int a, b;
+        cin >> a >> b;
+        add(a,b), add(b,a);
+    }
+    //print(n);
+    dfs(1);
+    cout << ans << endl;
+    return 0;
+}

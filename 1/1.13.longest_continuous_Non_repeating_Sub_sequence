@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+vector<int> arr;
+int len;
+
+void Init(){
+  len = rand()%100000+1;
+  for(int i=1;i<=len;i++){
+    arr.push_back(rand()%100001);
+  }
+}
+void Print(){
+  cout << "arr[" << len << "]: ";
+  for(auto i :arr) cout << i << " ";
+  cout << endl;
+}
+int main(){
+  srand(time(0));
+  Init();
+  Print();
+
+  int ret = 0;
+  multimap<int,int> m;
+  for(int j=1,i=1;j<=len;j++){
+    m[arr[j]]++;
+    while(arr[j]>1){
+      m[i++]--;
+    }
+    ret = max(ret,j-i+1);
+  }
+  cout << "longest sequence: " << ret;
+  return 0;
+}

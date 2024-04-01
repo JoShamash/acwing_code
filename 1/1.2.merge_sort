@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> arr(20);
+
+void Init(){
+  for(auto &i :arr) i=rand()%31;
+}
+void Merge_sort(int l,int r){
+  if(l>=r) return;
+  int mid=l+r>>1;
+  int l1=l, y1=mid, l2=mid+1, y2=r;
+  Merge_sort(l1,y1), Merge_sort(l2,y2);
+  vector<int> temp;
+  int i=l1, j=l2;
+  while(i<=y1&&j<=y2){
+    if(arr[i]<arr[j]) temp.push_back(arr[i++]);
+    else temp.push_back(arr[j++]);
+  }
+  while(i<=y1)  temp.push_back(arr[i++]);
+  while(j<=y2) temp.push_back(arr[j++]);
+  for(int k=l,n=0;k<=r;k++){
+    arr[k] = temp[n++];
+  }
+}
+void Print(){
+  for(auto i :arr) cout << i << " ";
+  cout << endl;
+}
+int main(){
+  srand(time(0));
+  Init();
+  Print();
+  Merge_sort(0,arr.size()-1);
+  Print();
+  return 0;
+}

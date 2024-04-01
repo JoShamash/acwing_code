@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+int son[N][26], cnt[N], idx;
+
+void Insert(string x){
+    int u = 0;
+    for(auto i:x){
+         int v = i-'0';
+         if(!son[u][v]) son[u][v]=++idx;
+         u = son[u][v];
+    }
+    cnt[u]++;
+}
+
+int Query(string x){
+    int u = 0;
+    for(auto i:x){
+        int v = i-'0';
+        if(!son[u][v]) return 0;
+        else u = son[u][v];
+    }
+    return cnt[u];
+}
+int main(){
+    int n;
+    cin >> n;
+    while(n--){
+        string op;
+        string x;
+        cin >> op;
+        if(op=="I"){
+            cin >> x;
+            Insert(x);
+        }
+        else{
+            cin >> x;
+            cout << Query(x) << endl;
+        }
+    }
+    return 0;
+}

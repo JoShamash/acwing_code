@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> arr;
+int len, k;
+
+void Init(){
+  len = rand()%21+10;
+  for(int i=0;i<len;i++) arr.push_back(rand()%101);
+}
+void Print(){
+  for(auto i :arr) cout << i << " ";
+  cout << endl;
+}
+int main(){
+  srand(time(0));
+  Init();
+  sort(arr.begin(),arr.end(),less<int>());
+  k = rand()%len+1;
+  cout << "The k-th number is " << arr[k-1];
+  return 0;
+}

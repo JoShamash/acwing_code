@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6;
+int n,m,x;
+vector<int> s1,s2;
+
+void Init(){
+  n = rand()%30+1;
+  m = rand()%30+1;
+  for(int i=0;i<n;i++){
+    s1.push_back(rand()%N+1);
+  }
+  for(int i=0;i<n;i++){
+    s2.push_back(rand()%N+1);
+  }
+  sort(s1.begin(),s1.end(),less<int>());
+  sort(s2.begin(),s2.end(),less<int>());
+  x = rand()%N+1;
+}
+void Print(vector<int> s){
+  for(auto i :s) cout << i << " ";
+  cout << endl;
+}
+int main(){
+  srand(time(0));
+  Init();
+  Print(s1), Print(s2);
+  int i=0, j=m-1;
+  cout << "search sum : " << x << endl;
+  while(i<n&&j>=0){
+      if(s1[i]+s2[j]<x) i++;
+      else if(s1[i]+s2[j]>x) j--;
+      else cout << i++ << " " << j << endl;
+  }
+  return 0;
+}

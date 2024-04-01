@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1010;
+int n,m,q;
+int s[N][N], a[N][N];
+
+void Insert(int x1,int y1,int x2,int y2,int c){
+  a[x1][y1] += c;
+  a[x2+1][y1] -= c;
+  a[x1][y2+1] -= c;
+  a[x2+1][y2+1] += c;
+}
+void Init(){
+  n = rand()%1000+1;
+  m = rand()%1000+1;
+  q = rand()%100000+1;
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++){
+      s[i][j] = rand()%1001*(rand()%2?1:-1);
+      Insert(i,j,i,j,s[i][j]);
+    }
+  }
+}
+void Print(int arr[N][N]){
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++)
+      cout << std::right << setw(6) << arr[i][j] << " ";
+    cout << endl;
+  }
+}
+int main(){
+  srand(time(0));
+  Init();
+
+  cout << "before: " << endl;
+  cout << "s[]: " << endl;
+  Print(s);
+  cout << "a[]: " << endl;
+  Print(a);
+  cout << endl;
+
+  while(q--){
+    int x1,x2,y1,y2,c;
+    do{
+      x1 = rand()%n+1;
+      x2 = rand()%n+1;
+    }while(x1>x2);
+    do{
+      y1 = rand()%m+1;
+      y2 = rand()%m+1;
+    }while(y1>y2);
+    c = rand()%1001*(rand()%2?1:-1);
+    cout << "[" << x1 << "," << y1 << "]" << " to "
+         << "[" << x2 << "," << y2 << "]" << " " << c << endl;
+    Insert(x1,y1,x2,y2,c);
+  }
+
+  for(int i=1;i<=n;i++){
+    for(int j=1;j<=m;j++)
+      s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + a[i][j];
+  }
+  cout << endl;
+  cout << "after: " << endl;
+  cout << "s[]: " << endl;
+  Print(s);
+
+  return 0;
+}

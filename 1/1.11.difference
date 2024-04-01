@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+int n,m,l,r,c;
+int arr[N], d[N], s[N];
+
+void Insert(int l,int r,int c){
+  d[l] += c;
+  d[r+1] -= c; 
+}
+void Init(){
+  n = rand()%100000+1;
+  m = rand()%100000+1;
+  for(int i=1;i<=n;i++){
+    arr[i]=rand()%1001*(rand()%2?1:-1);
+    Insert(i,i,arr[i]);
+  }
+}
+void Print(int arr[]){
+  for(int i=1;i<=n;i++) cout << arr[i] << " ";
+  cout << endl;
+}
+int main(){
+  srand(time(0));
+  Init();
+  cout << "before : " <<  endl;
+  Print(arr);
+  cout << endl;
+  while(m--){
+    do{
+      l = rand()%n+1;
+      r = rand()%n+1;
+    }while(l>r);
+    c = rand()%1001*(rand()%2?1:-1);
+    cout << "[" << l << "," << r << "]" << " " << c << endl;
+    Insert(l,r,c);
+  }
+  cout << endl << "after : " <<  endl;
+  for(int i=1;i<=n;i++) s[i] = s[i-1] + d[i];
+  Print(s);
+  return 0;
+}

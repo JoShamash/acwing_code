@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6;
+int top, s[N];
+
+void Init(){
+    top = -1;
+}
+bool Empty(){
+    if(top==-1) return true;
+    else return false;
+}
+int Query(){
+    return s[top];
+}
+void Push(int x){
+    s[++top] = x;
+}
+void Pop(){
+    top--;
+}
+
+int main(){
+	Init();
+    int M;
+    cin >> M;
+    while(M--){
+        string op;
+        cin >> op;
+        if(op=="push"){
+            int x;
+            cin >> x;
+            Push(x);
+        }
+        else if(op=="pop"){
+            Pop();
+        }
+        else if(op=="empty"){
+            cout << (Empty() ? "Yes" : "No") << endl;
+        }
+        else cout << Query() << endl;
+    }
+    return 0;
+}

@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+const int mod = 1e9+7, N = 100010;
+int fact[N], infact[N];
+
+int qpow(int a,int b){
+    int res = 1;
+    while(b){
+        if(b&1) res = (LL)res*a%mod;
+        a = (LL)a*a%mod;
+        b >>= 1;
+    } 
+    return res;
+}
+
+void Init(){
+    fact[0]=infact[0]=1;
+    for(int i=1;i<N;i++){
+        fact[i] = (LL)fact[i-1]*i%mod;
+        infact[i] = (LL)infact[i-1]*qpow(i,mod-2)%mod;
+    }
+}
+
+int C(int a,int b){
+    return (LL)fact[a]*infact[b]%mod*infact[a-b]%mod;
+}
+
+int main(){
+    Init();
+    int n;
+    cin >> n;
+    while(n--){
+        int a, b;
+        cin >> a >> b;
+        cout << C(a,b) << endl;
+    }
+    return 0;   
+}

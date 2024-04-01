@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int mod = 1e9+10;
+unordered_map<int,int> mp;
+
+void divisor_cnt(int n){
+    for(int i=2;i<=n/i;i++)
+        while(n%i==0) mp[i]++,n/=i;
+    if(n>1) mp[n]++;
+}
+
+int main(){
+    int n;
+    cin >> n;
+    while(n--){
+        int a;
+        cin >> a;
+        divisor_cnt(a);
+    }
+    long long ret = 1;
+    for(auto i:mp)
+    	ret = ret*(i.second+1)%mod;
+    cout << ret << endl;
+    return 0;
+}

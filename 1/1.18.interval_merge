@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef pair<int,int> PII;
+vector<PII> r, ret;
+
+bool cmp(PII a,PII b){
+    return a.first < b.first;
+}
+void Init(){
+    int n;
+    cin >> n;
+    while(n--){
+        int l1, r1;
+        cin >> l1 >> r1;
+        r.push_back({l1,r1});
+    }
+}
+void Merge(){
+    sort(r.begin(),r.end(),cmp);
+    int l1 = r[0].first, r1 = r[0].second;
+    for(int i=1;i<r.size();i++){
+        if(r1<r[i].first){
+            ret.push_back({l1,r1});
+            l1=r[i].first, r1=r[i].second;            
+        }
+        else r1 = max(r1,r[i].second);
+    }
+    ret.push_back({l1,r1});
+}
+void ans(){
+    cout << ret.size() << endl;
+    for(auto i: ret){
+        cout << i.first << " " << i.second << endl;
+    }
+}
+
+int main(){
+    Init();
+    Merge();
+    ans();
+    return 0;
+}

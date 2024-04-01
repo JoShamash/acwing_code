@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+string a, b;
+
+void Init(){ //Randomize the numbers
+  int len1 = rand()%101;
+  int len2 = rand()%101;
+  for(int i=0;i<len1;i++){
+    if(!i) a.push_back(rand()%9+'1'); //Ensure the top number is not zero
+    else a.push_back(rand()%10+'0');
+  }
+  for(int i=0;i<len2;i++){
+    if(!i) b.push_back(rand()%9+'1');
+    else b.push_back(rand()%10+'0');
+  }
+}
+
+string P_add(string a,string b){
+  string c;
+  reverse(a.begin(),a.end());
+  reverse(b.begin(),b.end());
+  int len1 = a.length(), len2 = b.length();
+  if(len1<len2) swap(a,b);
+  int t = 0;
+  for(int i=0;i<a.length();i++){
+    t += a[i]-'0';
+    if(i<b.length()) t += b[i]-'0';
+    c.push_back(t%10+'0');
+    t /= 10;
+  }
+  if(t) c.push_back('1');
+  reverse(c.begin(),c.end());
+  return c;
+}
+
+int main(){
+  srand(time(0));
+  Init();
+  cout << "a: " << a << endl;
+  cout << "b: " << b << endl;
+  string c = P_add(a,b);
+  cout << "c: " << c << endl;
+  return 0;
+}

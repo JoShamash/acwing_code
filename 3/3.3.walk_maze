@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef pair<int,int> PII;
+const int N = 101;
+int dx[]={0,1,0,-1}, dy[]={1,0,-1,0};
+int m,n,dt[N][N];
+bool maze[N][N];
+PII path[N][N];
+
+void Init(){
+    cin >> n >> m;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++)
+            cin >> maze[i][j];
+    }
+    memset(dt,-1,sizeof(dt));
+    dt[1][1] = 0;
+    path[1][1] = {0,0};
+}
+
+bool cdt(int x,int y){
+    return (x>=1&&x<=n&&y>=1&&y<=m&&dt[x][y]==-1&&maze[x][y]==0);
+}
+
+void Bfs(int x,int y){
+    queue<PII> Q;
+    Q.push({x,y});
+    while(!Q.empty()){
+        PII p = Q.front();
+        int dis = dt[p.first][p.second];
+        for(int i=0;i<4;i++){
+            int a = p.first+dx[i];
+            int b = p.second+dy[i];
+            if(cdt(a,b)) dt[a][b]=dis+1, Q.push({a,b}), path[a][b]=p;
+        }
+        Q.pop();
+    }
+}
+
+void PrintPath(){
+    bool temp[n+1][m+1];
+    memset(temp,0,sizeof(temp));
+    PII pos = {n,m};
+    do{
+        temp[pos.first][pos.second]=1;
+        pos = path[pos.first][pos.second];
+    }while(pos.first&&pos.second);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++)
+            cout << temp[i][j] << " ";
+        cout << endl;
+    }
+}
+
+int main(){
+    Init();
+    Bfs(1,1);
+    cout << endl << dt[n][m] << endl << endl;;
+    PrintPath();
+    return 0;
+}
+
+/* input
+9 13
+0 1 0 1 0 1 0 1 0 1 0 1 0
+0 0 1 0 1 0 1 0 1 0 1 0 1
+0 0 0 0 0 1 0 1 0 1 0 1 0
+1 1 1 0 1 0 1 0 1 0 1 0 1
+0 0 0 0 0 1 0 0 0 0 0 1 0
+0 0 1 0 1 0 0 0 1 0 0 0 0
+0 1 0 1 0 0 0 1 0 1 0 0 0
+0 0 0 0 0 0 1 0 1 0 1 0 1
+0 1 0 1 0 1 0 1 0 1 0 0 0
+*/

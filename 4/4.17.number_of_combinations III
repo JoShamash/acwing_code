@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+
+int qpow(int a,int b,int p){
+    int ret = 1;
+    while(b){
+        ret = (LL)ret*a%p;
+        a = (LL)a*a%p;
+        b >>= 1;
+    }
+    return ret;
+}
+
+int C(int a,int b,int p){
+    int up = 1, down = 1;
+    for(int i=a,j=1;j<=b;i--,j++){
+        up = (LL)up*i%p;
+        down = (LL)down*j%p;
+    }
+    return (LL)up*qpow(down,p-2,p)%p;
+}
+
+int lucas(LL a,LL b,int p){
+    if(a<p&&b<p) return C(a,b,p);
+    return (LL)C(a%p,b%p,p)*lucas(a/p,b/p,p)%p;
+}
+
+int main(){
+    int n;
+    cin >> n;
+    while(n--){
+        LL a,b,p;
+        cin >> a >> b >> p;
+        cout << lucas(a,b,p) << endl;
+    }
+    return 0;
+}

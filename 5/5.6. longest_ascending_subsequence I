@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1010;
+int a[N], dp[N];
+
+int main(){
+    int n;
+    cin >> n;
+    for(int i=1;i<=n;i++) cin >> a[i];
+
+    for(int i=1;i<=n;i++){
+        dp[i] = 1;
+        for(int j=1;j<i;j++)
+            if(a[j]<=a[i]) dp[i]=max(dp[i],dp[j]+1);
+    }
+    cout << dp[n];
+    return 0;
+}
+
+
+/* print the subsequence
+
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1010;
+int a[N], dp[N], g[N];
+
+int main(){
+    int n;
+    cin >> n;
+    for(int i=1;i<=n;i++) cin >> a[i];
+
+    for(int i=1;i<=n;i++){
+        dp[i] = 1;
+        g[i] = 0;
+        for(int j=1;j<i;j++){
+            if(a[j]<a[i]){
+				if(dp[i]<dp[j]+1){
+					dp[i] = dp[j]+1;
+					g[i] = j;
+				}
+			}
+		}
+    }
+    int k=0;
+    for(int i=1;i<=n;i++){
+    	if(dp[k]<dp[i]){
+    		k = i;
+		}
+	}
+//	for(int i=1;i<=n;i++) cout << g[i] << " ";
+//	cout << endl;
+	vector<int> path;
+	for(int i=k;i>=1;i=g[i]){
+		path.push_back(a[i]);
+	}
+	reverse(path.begin(),path.end());
+	for(auto i:path) cout << i << " ";
+	cout << endl;
+    return 0;
+}
+
+*/

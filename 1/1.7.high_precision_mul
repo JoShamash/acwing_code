@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6;
+vector<int> a, b, c, d;
+
+class Print{
+public:
+  void operator()(const int &val){
+    cout << val;
+  }
+};
+
+void print(const vector<int> &v){
+  for_each(v.begin(),v.end(),Print());
+}
+
+void Init(){ //Randomize the numbers
+  int len1 = rand()%101;
+  int len2 = rand()%101;
+  for(int i=0;i<len1;i++){
+    if(!i) a.push_back(rand()%9+1); //Ensure the top number is not zero
+    else a.push_back(rand()%10);
+  }
+  for(int i=0;i<len2;i++){
+    if(!i) b.push_back(rand()%9+1);
+    else b.push_back(rand()%10);
+  }
+}
+
+vector<int> P_add(vector<int> a,vector<int> b){
+  int t = 0;
+  vector<int> temp;
+  if(a.size()<b.size()) swap(b,a);
+  for(int i=0;i<a.size()||t;i++){
+    if(i<a.size()) t += a[i];
+    if(i<b.size()) t += b[i];
+    temp.push_back(t%10);
+    t /= 10;
+  }
+  return temp;
+}
+vector<int> P_mul(vector<int> a,vector<int> b){
+  reverse(a.begin(),a.end());
+  reverse(b.begin(),b.end());
+  if(a.size()<b.size()) swap(b,a);
+
+  int t = 0;
+  for(int i=0;i<b.size();i++){
+    for(int j=0;j<i;j++) c.push_back(0);
+    for(int j=0;j<a.size()||t;j++){
+      if(j<a.size()) t += b[i]*a[j];
+      c.push_back(t%10);
+      t /= 10; 
+    }
+    if(i) c = P_add(c,d);
+    swap(c,d);
+    c.clear();
+  }
+  return d;
+}
+
+int main(){
+  srand(time(0));
+  Init();
+
+  cout << "a: ";
+  print(a);
+  cout << endl;
+  cout << "b: ";
+  print(b);
+  cout << endl;
+
+  c = P_mul(a,b);
+  cout << "c: ";
+  reverse(c.begin(),c.end());
+  print(c);
+  cout << endl;
+
+  return 0;
+}
