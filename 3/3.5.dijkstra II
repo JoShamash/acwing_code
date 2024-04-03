@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef pair<int,int> PII;
+const int N = 150010, INF = 0x3f3f3f3f;
+int n, m;
+int dt[N], h[N], e[N], w[N], ne[N], idx;
+bool st[N];
+
+void add(int a,int b,int c){
+    e[idx] = b;
+    w[idx] = c;
+    ne[idx] = h[a];
+    h[a] = idx++;
+}
+
+void dijkstra(){
+    dt[1] = 0;
+    priority_queue<PII, vector<PII>, greater<PII>> heap;
+    heap.push({0,1});
+    while(!heap.empty()){
+        PII k = heap.top();
+        heap.pop();
+        int val = k.second, dist = k.first;
+
+        if(val==n) break;
+        if(st[val]) continue;
+        st[val] = 1;
+        
+        for(int i=h[val];i!=-1;i=ne[i]){
+            int j = e[i];
+            if(dt[j]>dist+w[i]){
+                dt[j] = dist+w[i];
+                heap.push({dt[j],j});
+            }
+        }
+    }
+}
+
+int main(){
+    memset(h,-1,sizeof(h));
+    memset(dt,0x3f,sizeof(dt));
+    cin >> n >> m;
+    while(m--){
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a,b,c);
+    }
+    dijkstra();
+    cout << (dt[n]==INF?-1:dt[n]) << endl;
+}
