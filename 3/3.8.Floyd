@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 210, INF = 0x3f3f3f3f;
+int n, m, k;
+int dt[N][N];
+
+void floyd(){
+    for(int k=1;k<=n;k++){
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=n;j++)
+                dt[i][j] = min(dt[i][j],dt[i][k]+dt[k][j]);
+        }
+    }
+}
+
+int main(){
+    cin >> n >> m >> k;
+    memset(dt,0x3f,sizeof(dt));
+    for(int i=1;i<=n;i++){
+        dt[i][i] = 0;
+    }
+
+    while(m--){
+        int x, y, z;
+        cin >> x >> y >> z;
+        dt[x][y] = min(dt[x][y],z);
+    }
+
+    floyd();
+
+    while(k--){
+        int x, y;
+        cin >> x >> y;
+        if(dt[x][y]>INF/2) puts("impossible");
+        else cout << dt[x][y] << endl;
+    }
+
+    return 0;
+}

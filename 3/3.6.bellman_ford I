@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 510, M = 10010, INF = 0x3f3f3f3f;
+int n, m, k;
+int h[N], e[M], w[M], ne[M], idx, dt[N], bak[N];
+
+void Add(int x,int y,int z){
+    e[idx] = y;
+    w[idx] = z;
+    ne[idx] = h[x];
+    h[x] = idx++;
+}
+
+void Init(){
+    cin >> n >> m >> k;
+    memset(h,-1,sizeof(h));
+    memset(dt,0x3f,sizeof(dt));
+    while(m--){
+        int x, y, z;
+        cin >> x >> y >> z;
+        Add(x,y,z);
+    }
+}
+
+void Bellman_ford(){
+    dt[1] = 0;
+    for(int i=1;i<=k;i++){ 
+        memcpy(bak,dt,sizeof(dt));
+        for(int j=1;j<=n;j++){
+            for(int b=h[j];b!=-1;b=ne[b]){
+                dt[e[b]] = min(dt[e[b]],bak[j]+w[b]);
+            }
+        }
+    }
+}
+
+int main(){
+    Init();
+    Bellman_ford();
+    if(dt[n]>INF/2) cout<<"impossible";
+    else cout<<dt[n];
+    return 0;
+}

@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 510, M = 10010, INF = 0x3f3f3f3f;
+int n, m, k, dt[N], bak[N];
+struct edge{
+    int x;
+    int y;
+    int z;
+}Edges[M];
+
+void Init(){
+    memset(dt,0x3f,sizeof(dt));
+    cin >> n >> m >> k;
+    for(int i=1;i<=m;i++){
+        int x, y, z;
+        cin >> x >> y >> z;
+        Edges[i] = {x,y,z};
+    }
+}
+
+void Bellman_ford(){
+    dt[1] = 0;
+    for(int i=1;i<=k;i++){
+        memcpy(bak,dt,sizeof(dt));
+        for(int j=1;j<=m;j++){
+            int x, y, z;
+            x = Edges[j].x, y = Edges[j].y, z = Edges[j].z;
+            dt[y] = min(dt[y], bak[x]+z);
+        }
+    }
+}
+
+int main(){
+    Init();
+    Bellman_ford();
+    if(dt[n]>INF/2) cout << "impossible" << endl;
+    else cout << dt[n] << endl;
+    return 0;
+}
