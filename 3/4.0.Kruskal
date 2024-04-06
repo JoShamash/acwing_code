@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10, M = 2e5+10, INF = 0x3f3f3f3f;
+int n, m, p[N], pre[N], st[N];
+struct edge{
+    int u, v, w;
+    bool operator<(const edge& e) const{
+        return w<e.w;
+    }
+}Edges[M];
+
+void Init(){
+    cin >> n >> m;
+    for(int i=1;i<=m;i++)
+        cin >> Edges[i].u >> Edges[i].v >> Edges[i].w;
+    sort(Edges,Edges+m);
+    for(int i=1;i<=n;i++) p[i] = i;
+}
+
+int Find(int a){
+    if(p[a]!=a) p[a] = Find(p[a]);
+    return p[a];
+}
+
+int Kruskal(){
+    int res=0, cnt=0;
+    for(int i=1;i<=m;i++){
+        int u, v, w;
+        u = Edges[i].u, v = Edges[i].v, w = Edges[i].w;
+        if(Find(u)!=Find(v)) p[p[v]]=p[u], res+= w, cnt++, pre[v]=u, st[u]=st[v]=1;
+    } 
+    if(cnt!=n-1) return INF;
+    return res;
+}
+
+void Printpath(){
+    for(int i=1;i<=n;i++){
+        if(i>1 && st[i])
+            cout << pre[i] << "---" << i << endl;
+    }
+}
+
+int main(){
+    Init();
+    int t = Kruskal();
+    if(t==INF) puts("impossible");
+    else{
+        cout << t << endl;
+        Printpath();
+    }
+    return 0;
+}

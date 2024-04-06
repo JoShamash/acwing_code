@@ -2,7 +2,7 @@
 using namespace std;
 const int N = 510, M = 10010, INF = 0x3f3f3f3f;
 int n, m, k;
-int h[N], e[M], w[M], ne[M], idx, dt[N], bak[N];
+int h[N], e[M], w[M], ne[M], idx, dt[N], bak[N]; 
 
 void Add(int x,int y,int z){
     e[idx] = y;

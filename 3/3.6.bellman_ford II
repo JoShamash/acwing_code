@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 510, M = 10010, INF = 0x3f3f3f3f;
-int n, m, k, dt[N], bak[N];
+int n, m, k, dt[N], bak[N]; 
 struct edge{
     int x;
     int y;

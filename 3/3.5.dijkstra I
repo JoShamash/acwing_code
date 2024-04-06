@@ -14,6 +14,7 @@ void Init(){
         g[x][y] = min(g[x][y],z);
     }
 }
+
 void dijkstra(){
     dt[1] = 0;
     for(int i=1;i<=n;i++){

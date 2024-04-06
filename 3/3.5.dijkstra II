@@ -4,7 +4,7 @@ typedef pair<int,int> PII;
 const int N = 150010, INF = 0x3f3f3f3f;
 int n, m;
 int dt[N], h[N], e[N], w[N], ne[N], idx;
-bool st[N];
+bool st[N]; 
 
 void add(int a,int b,int c){
     e[idx] = b;
