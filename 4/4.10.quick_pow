@@ -2,12 +2,13 @@
 using namespace std;
 
 int qb(int a,int b,int p){
-    long long ret = 1;
+    long long res = 1;
     while(b){
         if(b&1) res = res*a%p;
         a = a*a%p;
         b >>= 1;
     }
+    return res;
 }
 
 int main(){

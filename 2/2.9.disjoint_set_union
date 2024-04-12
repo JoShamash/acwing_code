@@ -18,7 +18,7 @@ void Merge(int a,int b){
 }
 
 bool Query(int a,int b){
-    return Set[a]==Set[b];
+    return Find[a]==Find[b];
 }
 
 int main(){
